@@ -1,0 +1,171 @@
+;------------------------------------------------------------------------------
+; GBA Test Collection - GBA test ROMs written in ARM assembly.
+; Copyright (C) 2021  Michelle-Marie Schiller
+;------------------------------------------------------------------------------
+; mmio.inc - Useful register definitions.
+;------------------------------------------------------------------------------
+
+; LCD Control
+REG_DISPCNT  = 0x000
+REG_DISPSTAT = 0x004
+REG_VCOUNT   = 0x006
+
+; Display Control
+DISPCNT_MODE0 = 0
+DISPCNT_MODE1 = 1
+DISPCNT_MODE2 = 2
+DISPCNT_MODE3 = 3
+DISPCNT_MODE4 = 4
+DISPCNT_MODE5 = 5
+DISPCNT_MODE6 = 6
+DISPCNT_MODE7 = 7
+DISPCNT_FRAME0 = 0 shl 4
+DISPCNT_FRAME1 = 1 shl 4
+DISPCNT_OAM_2D = 0 shl 6
+DISPCNT_OAM_1D = 1 shl 6
+DISPCNT_OFF = 1 shl 7
+DISPCNT_ON  = 0 shl 7
+DISPCNT_BG0_ON = 1 shl 8
+DISPCNT_BG1_ON = 1 shl 9
+DISPCNT_BG2_ON = 1 shl 10
+DISPCNT_BG3_ON = 1 shl 11
+DISPCNT_OBJ_ON = 1 shl 12
+DISPCNT_WN0_ON = 1 shl 13
+DISPCNT_WN1_ON = 1 shl 14
+DISPCNT_OWN_ON = 1 shl 15
+
+; Display Status
+DISPSTAT_VBLANK   = 1
+DISPSTAT_HBLANK   = 2
+DISPSTAT_VCOUNTER = 4
+DISPSTAT_VBLANK_IRQ   = 1 shl 3
+DISPSTAT_HBLANK_IRQ   = 1 shl 4
+DISPSTAT_VCOUNTER_IRQ = 1 shl 5
+
+; Sound Control
+REG_SOUND1CNT_L = 0x060
+REG_SOUND1CNT_H = 0x062
+REG_SOUND1CNT_X = 0x064
+REG_SOUND2CNT_L = 0x068
+REG_SOUND2CNT_X = 0x06C
+REG_SOUND3CNT_L = 0x070
+REG_SOUND3CNT_H = 0x072
+REG_SOUND3CNT_X = 0x074
+REG_SOUND4CNT_L = 0x078
+REG_SOUND4CNT_X = 0x07C
+REG_SOUNDCNT_L  = 0x080
+REG_SOUNDCNT_H  = 0x082
+REG_SOUNDCNT_X  = 0x084
+REG_SOUNDBIAS   = 0x088
+REG_FIFOA = 0x0A0
+REG_FIFOB = 0x0A4
+
+; SOUNDCNT_L
+SOUNDCNT_L_1R = 1 shl 8
+SOUNDCNT_L_2R = 1 shl 9
+SOUNDCNT_L_3R = 1 shl 10
+SOUNDCNT_L_4R = 1 shl 11
+SOUNDCNT_L_1L = 1 shl 12
+SOUNDCNT_L_2L = 1 shl 13
+SOUNDCNT_L_3L = 1 shl 14
+SOUNDCNT_L_4L = 1 shl 15
+
+; SOUNDCNT_H
+SOUNDCNT_H_PSG_V25  = 0
+SOUNDCNT_H_PSG_V50  = 1
+SOUNDCNT_H_PSG_V100 = 2
+SOUNDCNT_H_DMAA_V50  = 0 shl 2
+SOUNDCNT_H_DMAA_V100 = 1 shl 2
+SOUNDCNT_H_DMAB_V50  = 0 shl 3
+SOUNDCNT_H_DMAB_V100 = 1 shl 3
+SOUNDCNT_H_DMAA_R  = 1 shl 8
+SOUNDCNT_H_DMAA_L  = 2 shl 8
+SOUNDCNT_H_DMAA_LR = 3 shl 8
+SOUNDCNT_H_DMAA_T0 = 0 shl 10
+SOUNDCNT_H_DMAA_T1 = 1 shl 10
+SOUNDCNT_H_DMAA_RESET = 1 shl 11
+SOUNDCNT_H_DMAB_R  = 1 shl 12
+SOUNDCNT_H_DMAB_L  = 2 shl 12
+SOUNDCNT_H_DMAB_LR = 3 shl 12
+SOUNDCNT_H_DMAB_T0 = 0 shl 14
+SOUNDCNT_H_DMAB_T1 = 1 shl 14
+SOUNDCNT_H_DMAB_RESET = 1 shl 15
+
+; SOUNDCNT_X
+SOUNDCNT_X_OFF = 0 shl 7
+SOUNDCNT_X_ON  = 1 shl 7
+
+; SOUNDBIAS
+SOUNDBIAS_32KHZ  = 0 shl 14
+SOUNDBIAS_65KHZ  = 1 shl 14
+SOUNDBIAS_131KHZ = 2 shl 14
+SOUNDBIAS_262KHZ = 3 shl 14
+
+; Direct Memory Access
+REG_DMA0SAD = 0x0B0
+REG_DMA0DAD = 0x0B4
+REG_DMA0CNT = 0x0B8
+REG_DMA1SAD = 0x0BC
+REG_DMA1DAD = 0x0C0
+REG_DMA1CNT = 0x0C4
+REG_DMA2SAD = 0x0C8
+REG_DMA2DAD = 0x0CC
+REG_DMA2CNT = 0x0D0
+REG_DMA3SAD = 0x0D4
+REG_DMA3DAD = 0x0D8
+REG_DMA3CNT = 0x0DC
+
+; DMA Control
+DMACNT_DST_INCREMENT = 0 shl 5
+DMACNT_DST_DECREMENT = 1 shl 5
+DMACNT_DST_FIXED     = 2 shl 5
+DMACNT_DST_INCRELOAD = 3 shl 5
+DMACNT_SRC_INCREMENT  = 0 shl 7
+DMACNT_SRC_DECREMENT  = 1 shl 7
+DMACNT_SRC_FIXED      = 2 shl 7
+DMACNT_SRC_PROHIBITED = 3 shl 7 ; = DMACNT_SRC_FIXED
+DMACNT_REPEAT = 1 shl 9
+DMACNT_HALFWORD = 0 shl 10
+DMACNT_WORD     = 1 shl 10
+DMACNT_DRQ = 1 shl 11
+DMACNT_IMMEDIATE = 0 shl 12
+DMACNT_VBLANK    = 1 shl 12
+DMACNT_HBLANK    = 2 shl 12
+DMACNT_SPECIAL   = 3 shl 12
+DMACNT_IRQ = 1 shl 14
+DMACNT_ON  = 1 shl 15
+
+; Timers
+REG_TM0CNT = 0x100
+REG_TM1CNT = 0x104
+REG_TM2CNT = 0x108
+REG_TM3CNT = 0x10C
+
+; Timer Control
+TMCNT_CASCADE = 4
+TMCNT_IRQ = 1 shl 6
+TMCNT_ON  = 1 shl 7
+
+; System Control
+REG_IE      = 0x200
+REG_WAITCNT = 0x204
+REG_IME     = 0x208
+
+; Interrupt Enable
+IE_VBLANK   = 1 shl 0
+IE_HBLANK   = 1 shl 1
+IE_VCOUNTER = 1 shl 2
+IE_TIMER0   = 1 shl 3
+IE_TIMER1   = 1 shl 4
+IE_TIMER2   = 1 shl 5
+IE_TIMER3   = 1 shl 6
+IE_SERIAL   = 1 shl 7
+IE_DMA0     = 1 shl 8
+IE_DMA1     = 1 shl 9
+IE_DMA2     = 1 shl 10
+IE_DMA3     = 1 shl 11
+IE_KEYPAD   = 1 shl 12
+IE_CART     = 1 shl 13
+
+;------------------------------------------------------------------------------
+;------------------------------------------------------------------------------
