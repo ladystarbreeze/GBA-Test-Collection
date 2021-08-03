@@ -47,9 +47,6 @@ Main:
     ldmia     r0, {r0-r2}
     bl        PrintStr
 
-    .Loop_Endless:
-        b         .Loop_Endless
-
     pop       {r12, pc}
 
     .Pool_Main:
