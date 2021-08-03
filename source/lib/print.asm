@@ -5,8 +5,8 @@
 ; print.asm - Text printing routines.
 ;------------------------------------------------------------------------------
 	
-	include   '../inc/memory.inc'
-	include   '../inc/mmio.inc'
+    include   '../inc/memory.inc'
+    include   '../inc/mmio.inc'
 
 ;------------------------------------------------------------------------------
 ; void InitPrint(u16 cBg, u16 cText)
@@ -22,18 +22,18 @@
 ; Nothing.
 ;------------------------------------------------------------------------------
 InitPrint:
-	; initialize text colors
-	orr       r1, r0, r1, lsl 16
-	mov       r0, MEM_PRAM
-	str       r1, [r0]
-	
-	; initialize display mode
-	mov       r0, MEM_MMIO
-	mov       r1, DISPCNT_MODE4
-	orr       r1, DISPCNT_BG2_ON
-	strh      r1, [r0]
-	
-	bx        lr
+    ; initialize text colors
+    orr       r1, r0, r1, lsl 16
+    mov       r0, MEM_PRAM
+    str       r1, [r0]
+
+    ; initialize display mode
+    mov       r0, MEM_MMIO
+    mov       r1, DISPCNT_MODE4
+    orr       r1, DISPCNT_BG2_ON
+    strh      r1, [r0]
+
+    bx        lr
 
 End_InitPrint:
 ;------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ PrintStr:
         ; get next character
         ldrb      r0, [r4], 1
 
-		; return if char == 0
+        ; return if char == 0
         movs      r0, r0
         beq       .Return
 
@@ -212,8 +212,8 @@ PrintChar:
 End_PrintChar:
 ;------------------------------------------------------------------------------
 
-	include   'font.asm'
-	align     4
+    include   'font.asm'
+    align     4
 
 ;------------------------------------------------------------------------------
 ;------------------------------------------------------------------------------
