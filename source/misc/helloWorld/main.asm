@@ -35,7 +35,7 @@ macro m_STR msg
 ;------------------------------------------------------------------------------
 Main:
     push      {r12, lr}
-    adr       r12, .Pool_Main
+    adr       r12, .Pool
 	
     ; initialize print library
     mov       r0, 0
@@ -49,7 +49,7 @@ Main:
 
     pop       {r12, pc}
 
-    .Pool_Main:
+    .Pool:
         ; PrintStr - Hello World message [0x00]
         dw        MEM_ROM0 + Str_HelloWorld, 1, 1
 

@@ -60,7 +60,7 @@ PrintStr:
     mov       r5, r1
     mov       r6, r2
 
-    .Loop_Print:
+    .Loop:
         ; get next character
         ldrb      r0, [r4], 1
 
@@ -75,7 +75,7 @@ PrintStr:
         bl        PrintChar
 
         add       r5, 1       ; increment X coordinate
-        b         .Loop_Print
+        b         .Loop
 
     .Return:
         pop       {r4-r6, pc}
@@ -107,7 +107,7 @@ PrintHex:
     mov       r6, r2
     mov       r7, r3
 
-    .Loop_Print:
+    .Loop:
         sub       r5, 1 ; decrement n
 		
         ; get next hex digit and right-shift x by 4
@@ -127,7 +127,7 @@ PrintHex:
 
         ; return if n == 0
         movs      r5, r5
-        bne       .Loop_Print
+        bne       .Loop
 
     pop       {r4-r7, pc}
 End_PrintHex:
@@ -169,7 +169,7 @@ PrintChar:
 
     mov       r2, 8 ; initialize loop counter
 
-    .Loop_Draw:
+    .Loop:
         subs      r2, 1
 
         ; pixel16 = (pixel8L + (pixel8H << 8))
@@ -204,7 +204,7 @@ PrintChar:
 
         add       r4, 240    ; increment VRAM address by 240
         sub       r1, 8      ; decrement loop counter
-        b         .Loop_Draw
+        b         .Loop
 
     .Return:
         pop       {r4-r5, pc}

@@ -43,7 +43,7 @@ macro m_AUDIO stream
 Main:
     push      {r12, lr}
     mov       r4, MEM_MMIO
-    adr       r12, .Pool_Main
+    adr       r12, .Pool
 	
     ; initialize print library
     mov       r0, 0
@@ -87,14 +87,14 @@ Main:
     ldr       r0, [r12, 0x34]
     str       r0, [r4, REG_TM0CNT]
 
-    .Loop_Endless:
+    .Loop:
         ; clear IF, call SWI Halt()
         str       r6, [r4, REG_IE]
         swi       0x20000
 
         ; decrement sample counter
         subs      r5, 1
-        bne       .Loop_Endless
+        bne       .Loop
 
         ; restart DMA channels, reset sample counter
         mov       r0, 0
@@ -106,11 +106,11 @@ Main:
         str       r2, [r4, REG_DMA2CNT]
         ldr       r5, [r12, 0x30]
 
-        b         .Loop_Endless
+        b         .Loop
 
     pop       {r12, pc}
 
-    .Pool_Main:
+    .Pool:
         ; PrintStr - Hello World message [0x00]
         dw        MEM_ROM0 + Str_HelloWorld, 1, 1
         ; SOUNDCNT_H [0x0C]

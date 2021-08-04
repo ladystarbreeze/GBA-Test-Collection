@@ -33,7 +33,7 @@ Addr_MemSet32 = MEM_IRAM + 0x20
 ; No return.
 ;------------------------------------------------------------------------------
 EntryPoint:
-    adr       r12, .Pool_EntryPoint
+    adr       r12, .Pool
 
     ; initialize IRQ mode stack pointer and SPSR
     msr       cpsr, PSR_MIRQ
@@ -101,10 +101,10 @@ EntryPoint:
     ; jump to Main()
     bl        Main
 
-    .Loop_Endless:
-        b         .Loop_Endless
+    .Loop:
+        b         .Loop
 
-    .Pool_EntryPoint:
+    .Pool:
         ; stack pointers (IRQ, SVC, SYS) [0x00]
         dw        MEM_IRAM + 0x7FA0, MEM_IRAM + 0x7FE0, MEM_IRAM + 0x7F00
         ; WAITCNT [0x0C]

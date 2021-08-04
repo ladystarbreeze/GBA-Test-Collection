@@ -29,14 +29,14 @@ MemCpy32:
     ; pEnd = pDst + nWords * 4
     add       r3, r0, r2, lsl 2
 
-    .Loop_MemCpy32:
+    .Loop:
         ; *pDst++ = *pSrc++
         ldr       r2, [r1], 4
         str       r2, [r0], 4
 
         ; if (pDst != pEnd) goto .Loop_MemCpy32
         cmp       r0, r3
-        bne       .Loop_MemCpy32
+        bne       .Loop
 
     bx        lr
 
@@ -64,13 +64,13 @@ MemSet32:
     ; pEnd = pDst + nWords * 4
     add       r3, r0, r2, lsl 2
 
-    .Loop_MemSet32:
+    .Loop:
         ; *pDst = data
         str       r1, [r0], 4
 
         ; if (pDst != pEnd) goto .Loop_MemCpy32
         cmp       r0, r3
-        bne       .Loop_MemSet32
+        bne       .Loop
 
     bx        lr
 
