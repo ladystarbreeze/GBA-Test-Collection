@@ -126,7 +126,7 @@ EntryPoint:
         ; MemSet32 - clear ORAM [0x5C]
         dw        MEM_ORAM, 0, Size_MEM_ORAM / 4
     
-    .Includes_EntryPoint:
+    .Includes:
         include   'lib/memcpy.asm'
 
 End_EntryPoint:
