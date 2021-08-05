@@ -281,6 +281,12 @@ Str_IRQARM:
 Str_IRQThumb:
     m_STR     "IRQ (Thumb)"
 
+Str_SWIARM:
+    m_STR     "SWI (ARM)"
+
+Str_SWIThumb:
+    m_STR     "SWI (Thumb)"
+
 ; result strings
 Str_OK:
     m_STR     "- OK!"
